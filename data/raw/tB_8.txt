@@ -1,0 +1,15 @@
+Table B.8 Sampling errors: Northern Province sample, Rwanda DHS 2025
+PDF pages: 459, 460
+
+HEADER
+                                                                                    Number of cases                         Confidence limits
+                                                                          Standard   Un-               Design    Relative
+                                                                 Value      error  weighted Weighted    effect     error
+Variable                                                          (R)       (SE)      (N)      (WN)    (DEFT)     (SE/R)    R-2SE      R+2SE
+                                                                                                Number of cases                        Confidence limits
+                                                                                   Standard   Un-                 Design    Relative
+                                                                          Value      error  weighted Weighted      effect     error
+Variable                                                                   (R)       (SE)      (N)     (WN)       (DEFT)     (SE/R)    R-2SE     R+2SE
+
+FOOTNOTES
+

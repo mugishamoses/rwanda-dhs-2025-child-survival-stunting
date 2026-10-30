@@ -1,0 +1,70 @@
+kind,id,title,printed_page,pdf_page,located,numbers_on_page,story_section
+Table,8.1,Early childhood mortality rates,141,179,verified,97,1 Hook / mortality trend
+Figure,8.1,Trends in early childhood mortality rates,138,176,verified,101,1 Hook / mortality trend
+Table,8.2,Five-year early childhood mortality rates according to background characteristics,141,179,verified,97,1 Hook / mortality trend; 5 Gaps (mortality by group)
+Table,8.3,Ten-year early childhood mortality rates according to additional characteristics,142,180,verified,158,1 Hook / mortality trend; 5 Gaps (mortality by group)
+Table,5.1,Current fertility,86,124,verified,133,2 Fertility trend
+Table,5.2,Fertility by background characteristics,86,124,verified,133,2 Fertility trend
+Table,5.3.1,Trends in age-specific fertility rates,87,125,verified,148,2 Fertility trend
+Table,5.3.2,Trends in age-specific and total fertility rates,87,125,verified,148,2 Fertility trend
+Figure,5.1,Trends in fertility by residence,80,118,verified,116,2 Fertility trend
+Figure,5.2,Trends in age-specific fertility,80,118,verified,116,2 Fertility trend
+Figure,6.5,Trends in wanted and actual fertility,100,138,verified,44,2 Fertility trend
+Table,12.4,Maternal mortality rates,245,283,verified,111,2 Maternal mortality trend
+Table,12.5,Maternal mortality ratio,245,283,verified,111,2 Maternal mortality trend
+Figure,12.2,Trends in maternal mortality ratios with confidence intervals,242,280,verified,67,2 Maternal mortality trend
+Table,B.11,"Sampling errors: Adult and maternal mortality rates, Rwanda DHS 2025",426,464,verified,380,2 Maternal mortality trend; Margins of error
+Table,9.1,Antenatal care,155,193,verified,292,3 Antenatal care
+Table,9.2,Number of antenatal care visits and timing of first visit,156,194,verified,489,3 Antenatal care
+Table,9.3.1,Components of antenatal care among women receiving ANC,157,195,verified,266,3 Antenatal care
+Table,9.3.2,Components of antenatal care among all women,158,196,verified,266,3 Antenatal care
+Figure,9.1,Trends in antenatal care coverage,146,184,verified,74,3 Antenatal care
+Table,3.13.1,Place of birth and recent migration: Women,57,95,verified,191,3 Delivery
+Table,3.13.2,Place of birth and recent migration: Men,58,96,verified,201,3 Delivery
+Table,9.7.1,Place of delivery,162,200,verified,239,3 Delivery
+Table,9.9,Assistance during delivery,165,203,verified,442,3 Delivery
+Figure,9.2,Trends in place of birth,149,187,verified,41,3 Delivery
+Figure,9.4,Assistance during delivery,150,188,verified,74,3 Delivery
+Figure,9.5,Trends in skilled attendance at delivery,150,188,verified,74,3 Delivery
+Table,7.4.1,Trends in current use of contraception,121,159,verified,132,3 Family planning
+Table,7.15.1,Need and demand for family planning among currently married women,129,167,verified,328,3 Family planning
+Table,7.15.2,Need and demand for family planning among all women and among sexually active unmarried women,130,168,verified,617,3 Family planning
+Figure,7.1,Contraceptive use,110,148,verified,39,3 Family planning
+Figure,7.2,Trends in contraceptive use,111,149,verified,47,3 Family planning
+Figure,7.5,Demand for family planning,114,152,verified,27,3 Family planning
+Figure,7.6,Trends in demand for family planning,115,153,verified,55,3 Family planning
+Table,10.2,Possession and observation of vaccination cards according to background characteristics,191,229,verified,158,3 Vaccination
+Table,10.3,Vaccinations by source of information,192,230,verified,203,3 Vaccination
+Table,10.4,Vaccinations by background characteristics,193,231,verified,614,3 Vaccination
+Table,10.5,Source of vaccinations,194,232,verified,251,3 Vaccination
+Figure,10.1,Childhood vaccinations,183,221,verified,62,3 Vaccination
+Figure,10.2,Trends in childhood vaccinations,184,222,verified,41,3 Vaccination
+Table,18.1,HPV vaccination coverage,338,376,verified,160,3 Vaccination
+Table,18.2,Source of HPV vaccinations,339,377,verified,156,3 Vaccination
+Table,C.15,Vaccination cards photographed,441,479,verified,192,3 Vaccination
+Table,11.1,Nutritional status of children,219,257,verified,595,4 Stunting / nutrition
+Table,11.2,Child growth monitoring,221,259,verified,238,4 Stunting / nutrition
+Table,11.12,Reasons for not attending child growth monitoring and nutrition promotion sessions,231,269,verified,247,4 Stunting / nutrition
+Figure,11.1,Trends in child growth measures,208,246,verified,54,4 Stunting / nutrition
+Table,D.4,Nutritional status of children,446,484,verified,421,4 Stunting / nutrition
+Figure,8.2,Under-5 mortality by mother’s education,138,176,verified,101,5 Gaps (mortality by group)
+Figure,8.3,Perinatal mortality by mother’s age at birth,139,177,verified,64,5 Gaps (mortality by group)
+Table,11.3,Early breastfeeding,222,260,verified,164,6 First 1000 days
+Table,11.4,Breastfeeding status according to age,223,261,verified,202,6 First 1000 days
+Table,11.8,"Minimum dietary diversity, minimum meal frequency, and minimum acceptable diet among children",227,265,verified,330,6 First 1000 days
+Table,11.16,Minimum dietary diversity and unhealthy food and beverage consumption among women,238,276,verified,131,6 First 1000 days
+Figure,11.3,IYCF indicators on minimum acceptable diet by breastfeeding status,212,250,verified,59,6 First 1000 days
+Table,D.5,Breastfeeding status according to age,447,485,verified,205,6 First 1000 days
+Table,A.1,"Distribution of households by province, district, and residence type",394,432,verified,302,District map
+Table,A.2,"Distribution of EAs and their average size in number of households by province, district, and residence type",395,433,verified,243,District map
+Table,A.3,"Sample allocation of clusters and households by province, district, and residence type",396,434,verified,263,District map
+Table,A.4,"Sample allocation of expected number of women aged 15–49 years and men aged 15–59 years interviewed by province, district, and type of residence",397,435,verified,269,District map
+Table,B.2,"Sampling errors: Total sample, Rwanda DHS 2025",409,447,verified,591,Margins of error
+Table,B.3,"Sampling errors: Urban sample, Rwanda DHS 2025",411,449,verified,583,Margins of error
+Table,B.4,"Sampling errors: Rural sample, Rwanda DHS 2025",413,451,verified,587,Margins of error
+Table,B.5,"Sampling errors: City of Kigali sample, Rwanda DHS 2025",415,453,verified,690,Margins of error
+Table,B.6,"Sampling errors: Southern Province sample, Rwanda DHS 2025",417,455,verified,725,Margins of error
+Table,B.7,"Sampling errors: Western Province sample, Rwanda DHS 2025",419,457,verified,725,Margins of error
+Table,B.8,"Sampling errors: Northern Province sample, Rwanda DHS 2025",421,459,verified,718,Margins of error
+Table,B.9,"Sampling errors: Eastern Province sample, Rwanda DHS 2025",423,461,verified,725,Margins of error
+Table,C.18,Pregnancy-related mortality trends,442,480,verified,166,Mortality trend (consistent series)

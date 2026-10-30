@@ -1,0 +1,11 @@
+
+PDF pages: 125
+
+HEADER
+Age-specific and total fertility rates (TFR) for the 3-year period preceding several surveys, according to
+mother’s age at the time of the birth, Rwanda DHS 2025
+                            1992         2000         2005         2010        2014–15      2019–20          2025
+Mother’s age at birth       RDHS         RDHS         RDHS         RDHS         RDHS         RDHS            RDHS
+
+FOOTNOTES
+Note: Age-specific fertility rates are per 1,000 women. Rates for the 45–49 age group may be slightly biased

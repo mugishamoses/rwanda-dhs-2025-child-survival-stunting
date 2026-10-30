@@ -1,0 +1,11 @@
+Table 8.1 Early childhood mortality rates
+PDF pages: 179
+
+HEADER
+Neonatal, postneonatal, infant, child, and under-5 mortality rates for 5-year periods preceding the survey, Rwanda DHS 2025
+                                               Neonatal            Postneonatal           Infant                Child                Under-5
+Years preceding         Approximate            mortality             mortality           mortality             mortality             mortality
+the survey             calendar years            (NN)                 (PNN)1               (1q0)                (4q1)                 (5q0)
+
+FOOTNOTES
+

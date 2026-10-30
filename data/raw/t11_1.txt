@@ -1,0 +1,20 @@
+Table 11.1 Nutritional status of children
+PDF pages: 257, 258
+
+HEADER
+Percentage of children under age 5 classified as malnourished according to three anthropometric indices of child growth: height-for-age, weight-for-height, and weight-for-age,
+according to background characteristics, Rwanda DHS 2025
+                                          Height-for-age1                                     Weight-for-height                                 Weight-for-age
+                            Percent- Percent-                          Percent- Percent- Percent-                               Percent- Percent-
+                              age      age           Mean     Number     age      age      age                Mean     Number     age      age             Mean      Number
+Background                   below    below         z score      of     below    below    above              z score      of     below    below           z score       of
+characteristic               −3 SD    −2 SD2          (SD)    children  −3 SD    −2 SD2   +2 SD                (SD)    children  −3 SD    −2 SD2            (SD)     children
+                                          Height-for-age1                                     Weight-for-height                                  Weight-for-age
+                            Percent- Percent-                           Percent- Percent- Percent-                               Percent- Percent-
+                              age      age           Mean      Number     age      age      age               Mean      Number     age      age             Mean      Number
+Background                   below    below         z score       of     below    below    above             z score       of     below    below           z score       of
+characteristic               −3 SD    −2 SD2          (SD)     children  −3 SD    −2 SD2
+                                                                                           +2 SD               (SD)     children  −3 SD    −2 SD2            (SD)     children
+
+FOOTNOTES
+Note: Each of the indices is expressed in standard deviation units (SD) from the median of the WHO Child Growth Standards. An asterisk indicates that a figure is based on fewer

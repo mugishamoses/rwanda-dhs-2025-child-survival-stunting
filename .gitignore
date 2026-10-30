@@ -1,0 +1,8 @@
+# source PDFs: re-download from links in NISR_Downloads/DHS_2025/SOURCES.tsv
+NISR_Downloads/**/*.pdf
+# video render scratch
+brag-output/work/frames*/
+brag-output/work/stills/
+brag-output/work/.chrome/
+brag-output/work/*.wav
+__pycache__/

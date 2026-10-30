@@ -1,0 +1,11 @@
+table,pdf_page,group,row_label,column,value,checker_1_ok,checker_2_ok
+B.8,459,HOUSEHOLDS AND POPULATION,Births registered with civil authority,c1,0.963
+11.4,261,Province,Eastern Province,c6,11.3
+B.9,462,HOUSEHOLDS AND POPULATION,Child had fever in last 2 weeks,c4,"2,004"
+B.6,455,HOUSEHOLDS AND POPULATION,Received measles vaccination,c8,1.000
+9.7.1,200,Residence,Urban,c4,0.3
+B.7,457,HOUSEHOLDS AND POPULATION,Received BCG vaccination,c6,0.005
+10.4,231,Sex,Male,c8,96.3
+B.4,452,HOUSEHOLDS AND POPULATION,Received measles/measles-rubella 2 vaccination (24–35 months),c1,0.926
+B.4,452,HOUSEHOLDS AND POPULATION,Weight-for-age (−2 SD),c1,0.065
+B.8,459,HOUSEHOLDS AND POPULATION,Unmet need for limiting,c5,1.045

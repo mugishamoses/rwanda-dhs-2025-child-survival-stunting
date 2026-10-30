@@ -1,0 +1,12 @@
+Table B.11 Sampling errors: Adult and maternal mortality rates, Rwanda DHS 2025
+PDF pages: 464
+
+HEADER
+                                                       Number of cases                              Confidence limits
+                                         Standard     Un-                      Design    Relative
+Background                    Value        error    weighted        Weighted    effect     error
+characteristic                 (R)         (SE)       (N)            (WN)      (DEFT)     (SE/R)    R-2SE      R+2SE
+                                                         WOMEN
+
+FOOTNOTES
+na = Not available

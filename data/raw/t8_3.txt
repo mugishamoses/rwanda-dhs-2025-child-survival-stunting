@@ -1,0 +1,12 @@
+Table 8.3 Ten-year early childhood mortality rates according to additional characteristics
+PDF pages: 180
+
+HEADER
+Neonatal, postneonatal, infant, child, and under-5 mortality rates for the 10-year period preceding the survey, according to
+additional characteristics, Rwanda DHS 2025
+                                Neonatal          Postneonatal            Infant              Child              Under-5
+                                mortality           mortality            mortality           mortality           mortality
+Characteristic                    (NN)               (PNN)1                (1q0)              (4q1)               (5q0)
+
+FOOTNOTES
+Note: Figures in parentheses are based on 250–499 unweighted children.

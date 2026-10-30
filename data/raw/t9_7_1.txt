@@ -1,0 +1,13 @@
+Table 9.7.1 Place of delivery
+PDF pages: 200
+
+HEADER
+Percentage distribution of live births and/or stillbirths in the 2 years preceding the survey by place of delivery and percentage delivered in a health
+facility, according to background characteristics, Rwanda DHS 2025
+                                    Health facility                                                                   Percentage
+Background                      Public         Private                                                               delivered in a     Number of
+characteristic                  sector       medical sector        Home              Other              Total        health facility      births
+                                                                     LIVE BIRTHS
+
+FOOTNOTES
+Note: Stillbirths are fetal deaths in pregnancies lasting 28 or more weeks. When pregnancy duration is reported in months, stillbirths are fetal deaths

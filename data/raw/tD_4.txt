@@ -1,0 +1,12 @@
+Table D.4 Nutritional status of children
+PDF pages: 484
+
+HEADER
+Percentage of children under age 5 classified as malnourished according to 3 anthropometric indices of child growth: height-for-age, weight-for-height, and weight-for-age, according to district, Rwanda DHS 2025
+                                       Height-for-age1                                                   Weight-for-height                                                   Weight-for-age
+                   Percentage     Percentage        Mean                      Percentage     Percentage     Percentage        Mean                       Percentage    Percentage         Mean
+                     below          below          z score      Number of       below          below          above          z score      Number of        below         below           z score     Number of
+District              -3 SD         -2 SD2           (SD)        children        -3 SD         -2 SD2         +2 SD            (SD)        children         -3 SD        -2 SD2            (SD)       children
+
+FOOTNOTES
+Note: Each of the indices is expressed in standard deviation units (SD) from the median of the WHO Child Growth Standards.

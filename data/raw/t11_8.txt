@@ -1,0 +1,18 @@
+Table 11.8 Minimum dietary diversity, minimum meal frequency, and minimum acceptable diet among children
+PDF pages: 265
+
+HEADER
+Percentage of youngest children aged 6–23 months living with their mother who received minimum dietary diversity, minimum meal frequency, and minimum acceptable diet
+during the day or night preceding the survey, by breastfeeding status, according to background characteristics, Rwanda DHS 2025
+                      Among youngest breastfed children aged                  Among youngest nonbreastfed children aged                      Among youngest children aged 6–23
+                       6–23 months living with their mother,                    6–23 months living with their mother,                         months living with their mother,
+                            percentage who received:                                  percentage who received:                                   percentage who received:
+                                                   Number                                        Number
+                                                     of     Minimum                              of non-                             Number
+                                                  breastfed    milk                             breastfed                             of all
+                    Minimum Minimum Minimum children         feeding Minimum Minimum Minimum children Minimum Minimum Minimum children
+Background           dietary meal fre- accept- aged 6–23       fre-   dietary meal fre- accept- aged 6–23 dietary meal fre- accept- aged 6–23
+characteristic      diversity1 quency2 able diet3 months quency4 diversity1 quency5 able diet6 months diversity1 quency7 able diet8 months
+
+FOOTNOTES
+Note: Figures in parentheses are based on 25–49 unweighted cases. An asterisk indicates that a figure is based on fewer than 25 unweighted cases and has been suppressed.

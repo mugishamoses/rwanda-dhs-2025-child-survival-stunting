@@ -1,0 +1,5 @@
+table,pdf_page,group,label,c1,ncols_flag
+12.5,283,Rwanda DHS 2025,Total fertility rate (TFR),3.7,
+12.5,283,Rwanda DHS 2025,General fertility rate (GFR)1,109,
+12.5,283,Rwanda DHS 2025,Maternal mortality ratio (MMR)2,149,84,215,"has 3 values, expected 1"
+12.5,283,Rwanda DHS 2025,Lifetime risk of maternal death3,0.006,

@@ -1,0 +1,389 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&display=block">
+<script src="d3.min.js"></script><script src="data.js"></script>
+<style>
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:#f1f1ef}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#f1f1ef}
+svg.sc{position:absolute;inset:0;width:1920px;height:1080px}
+text{font-family:"Source Sans 3",sans-serif;fill:#55544f}
+.mono{font-family:"IBM Plex Mono",monospace;letter-spacing:.03em}
+.thin{font-family:Archivo;font-weight:200;fill:#1d1d1b;letter-spacing:-.03em}
+.cond{font-family:Archivo;font-weight:800;font-stretch:72%;fill:#1d1d1b;text-transform:uppercase}
+.lab{font-family:"Source Sans 3";font-weight:600;fill:#1d1d1b}
+.ink{fill:#1d1d1b}
+#spine{position:absolute;left:0;top:0;bottom:0;width:64px;background:#eb6834;z-index:5}
+#spine span{position:absolute;left:50%;bottom:40px;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;color:#fff;font:700 20px Archivo;font-stretch:75%;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+#cap{position:absolute;left:50%;bottom:58px;transform:translateX(-50%);z-index:6;max-width:1560px;text-align:center;
+ background:rgba(29,29,27,.9);color:#fff;font:600 46px/1.22 "Source Sans 3",sans-serif;padding:14px 32px}
+#cap b{color:#f6a77c;font-weight:700}
+</style></head>
+<body><div id="stage">
+<div id="spine"><span>Rwanda DHS 2025 · From 196 to 36</span></div>
+<svg class="sc" id="sv" viewBox="0 0 1920 1080"></svg><svg class="sc" id="hud" viewBox="0 0 1920 1080" style="z-index:5"></svg><div id="cap"></div>
+</div>
+<script>
+/* v2: every frame is a pure function of t. seek(t) redraws everything. */
+const B = 60 / 110, BAR = 4 * B, at = b => b * BAR, DUR = at(28);
+const O = "#eb6834", BL = "#2a78d6", INK = "#1d1d1b", INK2 = "#55544f", GRID = "#e4e3de", ST2 = "#dcdbd6", ST3 = "#b9b8b1", SHEET = "#ffffff", PAGE = "#f1f1ef";
+const RAMP = ["#f09460", "#e46f36", "#c9561f", "#9e3f12", "#6e2a0a"];
+const C = Object.fromEntries(DATA.charts.map(c => [c.id, c]));
+const rows = (id, ind) => C[id].data.filter(r => !ind || r.indicator === ind).map(r => ({ ...r, v: +r.value, y: +r.year }));
+const clamp = x => Math.max(0, Math.min(1, x)), lerp = (a, b, p) => a + (b - a) * p;
+const io = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+const backOut = p => { const c = 1.6; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+const ep = (t, a, d) => io(clamp((t - a) / d));
+const shade = (c, k) => d3.color(c)[k > 0 ? "brighter" : "darker"](Math.abs(k)).formatHex();
+const fmt = v => (+v).toLocaleString("en-US", { maximumFractionDigits: 1 });
+const SURVEY = p => ({ "2014-15": "2014–15", "2019-20": "2019–20" }[p] ?? p) + " survey";
+
+function cam(g, t, keys) {
+  let k = keys[0];
+  for (let i = 0; i < keys.length - 1; i++) { const [ta, ...a] = keys[i], [tb, ...b] = keys[i + 1];
+    if (t >= ta) k = [t, ...a.map((v, j) => lerp(v, b[j], ep(t, ta, tb - ta)))]; }
+  const [, cx, cy, s] = k; g.attr("transform", `translate(960,560) scale(${s}) translate(${-cx},${-cy})`);
+}
+/* A callout: dot on the target, leader line, label block. Appears with p. */
+function callout(g, p, [x, y], [lx, ly], lines, { anchor = "start", size = 30, col = INK } = {}) {
+  if (p <= 0) return;
+  g.append("circle").attr("cx", x).attr("cy", y).attr("r", 7 * backOut(p)).attr("fill", O);
+  g.append("line").attr("x1", x).attr("y1", y).attr("x2", lerp(x, lx, p)).attr("y2", lerp(y, ly, p)).attr("stroke", O).attr("stroke-width", 3);
+  lines.forEach((l, i) => g.append("text").attr("x", lx + (anchor === "start" ? 10 : -10)).attr("y", ly + 10 + i * size * 1.15).attr("text-anchor", anchor)
+    .attr("class", "lab").attr("opacity", p).style("font-size", size + "px").style("fill", col).style("paint-order", "stroke").style("stroke", PAGE).style("stroke-width", "6px").text(l));
+}
+
+/* ---------- 1 Survival ---------- */
+function rings(g, t) {
+  const d = rows("rings").filter(r => r.y >= 2000).sort((a, b) => a.y - b.y), x = 520, top = 300, gap = 100;
+  const appear = i => i === 0 ? -1 : at(2) + (i - 1) * 2 * B + B;
+  g.append("text").attr("x", 860).attr("y", 180).attr("class", "lab").style("font-size", "34px").text("Children who died before their 5th birthday,");
+  g.append("text").attr("x", 860).attr("y", 222).attr("class", "lab").style("font-size", "34px").text("out of every 1,000 born");
+  g.append("rect").attr("x", x - 9).attr("y", 250).attr("width", 18).attr("height", 50 + ep(t, at(2), at(4.4) - at(2)) * gap * 5).attr("fill", ST3);
+  d.forEach((r, i) => {
+    const cy = top + i * gap, p = clamp((t - appear(i)) / .45); if (p <= 0) return;
+    const last = i === d.length - 1, R = r.v * 1.5, ry = Math.min(R * .2, 30), col = last ? BL : i === 0 ? O : ST2;
+    const rg = g.append("g").attr("transform", `translate(${x},0) scale(${backOut(p)},1) translate(${-x},0)`);
+    rg.append("ellipse").attr("cx", x).attr("cy", cy + 7).attr("rx", R).attr("ry", ry).attr("fill", shade(col, -.7));
+    rg.append("ellipse").attr("cx", x).attr("cy", cy).attr("rx", R).attr("ry", ry).attr("fill", col);
+    rg.append("ellipse").attr("cx", x).attr("cy", cy).attr("rx", Math.max(R - 12, 0)).attr("ry", Math.max(ry - 5, 0)).attr("fill", SHEET).attr("opacity", .5);
+    const big = i === 0 || last;
+    g.append("text").attr("x", 860).attr("y", cy + (big ? 36 : 22)).attr("class", "thin").attr("opacity", p).style("font-size", big ? "112px" : "68px").text(r.value_as_printed);
+    g.append("text").attr("x", big ? 1065 : 985).attr("y", cy + (big ? 4 : 2)).attr("class", "lab").attr("opacity", p).style("font-size", "26px").text("per 1,000");
+    g.append("text").attr("x", big ? 1065 : 985).attr("y", cy + (big ? 36 : 30)).attr("class", "mono").attr("opacity", p).style("font-size", "24px").text(SURVEY(r.period));
+  });
+  callout(g, ep(t, at(4.5), .5), [x - 294, top], [110, 200], ["Ring width = children who died"], { size: 28 });
+  const cp = ep(t, at(4.5) + B, .6), pm = rows("prmr").sort((a, b) => a.y - b.y);
+  if (cp > 0) {
+    const cg = g.append("g").attr("transform", `translate(${lerp(1950, 1360, cp)},470)`).attr("opacity", cp);
+    cg.append("rect").attr("width", 500).attr("height", 300).attr("fill", SHEET); cg.append("rect").attr("width", 8).attr("height", 300).attr("fill", BL);
+    cg.append("text").attr("x", 34).attr("y", 54).attr("class", "lab").style("font-size", "30px").text("Mothers too");
+    cg.append("text").attr("x", 30).attr("y", 152).attr("class", "thin").style("font-size", "96px").text(`${fmt(pm[0].v)} → ${pm.at(-1).value_as_printed}`);
+    ["Women who died in pregnancy or within", "2 months of birth, per 100,000 births", "2000 → 2025: down 84%"].forEach((l, i) =>
+      cg.append("text").attr("x", 34).attr("y", 200 + i * 32).attr("class", i === 2 ? "lab" : null).style("font-size", "25px").text(l));
+  }
+  cam(g, t, [[0, 1190, 270, 1.85], [2.3, 1190, 270, 1.85], [3.2, 840, 400, 1.45], [at(2), 840, 400, 1.45], [at(4.1), 780, 700, 1.3], [at(4.6), 960, 540, 1.0], [at(6), 960, 540, 1.0]]);
+}
+
+/* ---------- 2 Care ---------- */
+const C30 = Math.cos(Math.PI / 6), S30 = .5;
+const isoP = (ox, oy, k) => (x, y, z = 0) => [ox + (x - y) * C30 * k, oy + (x + y) * S30 * k - z * k];
+function box(g, P, x, y, z, w, d, h, c) {
+  const q = pts => pts.map(p => P(...p).join(",")).join(" ");
+  g.append("polygon").attr("points", q([[x, y + d, z], [x + w, y + d, z], [x + w, y + d, z + h], [x, y + d, z + h]])).attr("fill", shade(c, -.35));
+  g.append("polygon").attr("points", q([[x + w, y, z], [x + w, y + d, z], [x + w, y + d, z + h], [x + w, y, z + h]])).attr("fill", shade(c, -.8));
+  g.append("polygon").attr("points", q([[x, y, z + h], [x + w, y, z + h], [x + w, y + d, z + h], [x, y + d, z + h]])).attr("fill", shade(c, .15));
+}
+function care(g, t) {
+  const t0 = at(6), P = isoP(430, 380, 2.0);
+  const pieces = [
+    g => box(g, P, -20, -20, 0, 260, 200, 10, ST2), g => box(g, P, 0, 0, 10, 150, 110, 92, "#f4f3f0"),
+    g => box(g, P, 150, 20, 10, 80, 80, 58, "#f4f3f0"), g => box(g, P, 40, 30, 102, 60, 40, 22, ST2),
+    g => { box(g, P, 52, 108, 70, 46, 4, 28, O); const [sx, sy] = P(75, 112, 84); g.append("path").attr("d", `M${sx - 6},${sy - 18}h12v12h12v12h-12v12h-12v-12h-12v-12h12z`).attr("fill", "#fff"); },
+    g => { const L = (a, b, z1, z2, c) => g.append("polygon").attr("points", [[a, 110, z1], [b, 110, z1], [b, 110, z2], [a, 110, z2]].map(p => P(...p).join(",")).join(" ")).attr("fill", c);
+      for (let k = 0; k < 4; k++) L(12 + k * 33, 34 + k * 33, 34, 58, shade(BL, -.4)); L(104, 134, 10, 52, O); },
+    g => box(g, P, 196, 150, 10, 22, 14, 10, BL),
+  ];
+  pieces.forEach((f, i) => { const p = ep(t, t0 + .1 + i * B / 2, .45); if (p <= 0) return;
+    const pg = g.append("g").attr("transform", `translate(0,${(1 - p) * -90})`).attr("opacity", p); f(pg); });
+  g.append("text").attr("x", 160).attr("y", 120).attr("class", "lab").attr("opacity", ep(t, t0 + .3, .4)).style("font-size", "34px").text("A health centre, then and now");
+  const items = [["facility_birth", "Births in a health facility", "Delivery room"], ["anc_4plus", "Mothers with 4+ pregnancy check-ups", "Check-ups"],
+                 ["mcpr", "Married women using modern family planning", "Family planning"], ["vacc_basic", "Children aged 1–2 with all basic vaccines", "Vaccines"]];
+  const spots = [P(119, 110, 30), P(23, 110, 70), P(230, 48, 60), P(207, 157, 26)];
+  items.forEach(([ind, name, room], i) => {
+    const ta = at(7) + i * 1.5 * B, p = ep(t, ta, .5); if (p <= 0) return;
+    const r = rows("care", ind).sort((a, b) => a.y - b.y), f = r[0], l = r.at(-1), y0 = 150 + i * 168, cnt = ep(t, ta + .1, .9), [bx, by] = spots[i];
+    g.append("line").attr("x1", bx).attr("y1", by).attr("x2", bx).attr("y2", by - 54 * p).attr("stroke", O).attr("stroke-width", 3);
+    g.append("circle").attr("cx", bx).attr("cy", by - 76).attr("r", 24 * backOut(p)).attr("fill", O);
+    g.append("text").attr("x", bx).attr("y", by - 67).attr("text-anchor", "middle").attr("class", "mono").style("fill", "#fff").style("font-size", "26px").style("font-weight", 600).text(i + 1);
+    g.append("text").attr("x", bx + 32).attr("y", by - 68).attr("class", "lab").attr("opacity", p).style("font-size", "24px").style("paint-order", "stroke").style("stroke", PAGE).style("stroke-width", "6px").text(room);
+    const cg = g.append("g").attr("transform", `translate(${lerp(1280, 1060, p)},${y0})`).attr("opacity", p);
+    cg.append("line").attr("x1", 0).attr("x2", 780).attr("stroke", ST3);
+    cg.append("circle").attr("cx", 24).attr("cy", 42).attr("r", 22).attr("fill", O);
+    cg.append("text").attr("x", 24).attr("y", 51).attr("text-anchor", "middle").attr("class", "mono").style("fill", "#fff").style("font-size", "22px").text(i + 1);
+    cg.append("text").attr("x", 64).attr("y", 52).attr("class", "lab").style("font-size", "31px").text(name);
+    const now = lerp(f.v, l.v, cnt), dec = l.value_as_printed.includes(".") ? 1 : 0;
+    cg.append("text").attr("x", 64).attr("y", 132).attr("class", "thin").style("font-size", "70px").text(`${f.value_as_printed}% → ${now.toFixed(dec)}%`);
+    cg.append("text").attr("x", 64).attr("y", 166).attr("class", "mono").style("font-size", "22px").text(`${f.period.replace("-", "–")} → 2025`);
+    const sx = d3.scaleLinear([1992, 2025], [520, 770]), sy = d3.scaleLinear([0, 100], [160, 76]);
+    cg.append("path").attr("d", d3.line(q => sx(q.y), q => sy(q.v))(r.filter(q => q.y <= lerp(f.y, 2025, cnt)))).attr("fill", "none").attr("stroke", BL).attr("stroke-width", 4);
+  });
+  cam(g, t, [[t0, 520, 450, 1.45], [at(6.9), 600, 480, 1.3], [at(7.05), 960, 540, 1], [at(10), 960, 540, 1]]);
+}
+
+/* ---------- 3 Turn ---------- */
+function turn(g, t) {
+  const t0 = at(10), p = ep(t, t0 + .05, .3), lp = ep(t, t0 + .15, .7);
+  g.append("text").attr("x", 960).attr("y", 500).attr("text-anchor", "middle").attr("class", "cond").attr("opacity", p).style("font-size", "100px").text("But surviving is not");
+  g.append("text").attr("x", 960).attr("y", 606).attr("text-anchor", "middle").attr("class", "cond").attr("opacity", p).style("font-size", "100px").style("fill", O).text("the same as growing.");
+  g.append("rect").attr("x", 960 - 440 * lp).attr("y", 656).attr("width", 880 * lp).attr("height", 7).attr("fill", O);
+}
+
+/* ---------- 4 Cohort ---------- */
+function cohort(g, t) {
+  const spec = C.cohort, u5 = rows("cohort", "u5mr")[0], keys = ["lowest", "second", "middle", "fourth", "highest"];
+  const names = ["Poorest fifth", "2nd fifth", "Middle fifth", "4th fifth", "Richest fifth"], died = Math.round(u5.v), surv = 1000 - died;
+  const k = .66, w = 1000, w0 = g.append("g").attr("transform", "translate(250,80) scale(1.42)");
+  const defs = w0.append("defs"), gr = defs.append("linearGradient").attr("id", "tO").attr("gradientUnits", "userSpaceOnUse").attr("x1", 0).attr("x2", 0).attr("y1", 330).attr("y2", 480);
+  gr.append("stop").attr("offset", 0).attr("stop-color", ST2); gr.append("stop").attr("offset", 1).attr("stop-color", O);
+  const rib = (a0, a1, y0, b0, b1, y1) => { const m = (y0 + y1) / 2; return `M${a0},${y0}C${a0},${m} ${b0},${m} ${b0},${y1}L${b1},${y1}C${b1},${m} ${a1},${m} ${a1},${y0}Z`; };
+  const clip = (id, y0, y1, p) => { defs.append("clipPath").attr("id", id).append("rect").attr("x", -50).attr("y", y0).attr("width", 1200).attr("height", (y1 - y0) * p); return `url(#${id})`; };
+  const t0 = at(11), x0 = (w - 1000 * k) / 2 - 60, Y0 = 70, Y1 = 250, Y2 = 480;
+  const pb = ep(t, t0 + .1, .6);
+  w0.append("rect").attr("x", x0).attr("y", Y0).attr("width", 1000 * k * pb).attr("height", 12).attr("fill", INK);
+  w0.append("text").attr("x", x0).attr("y", Y0 - 14).attr("class", "thin").attr("opacity", pb).style("font-size", "52px").text(Math.round(1000 * pb).toLocaleString("en-US"));
+  w0.append("text").attr("x", x0 + 140).attr("y", Y0 - 20).attr("class", "lab").attr("opacity", pb).style("font-size", "21px").text("babies born");
+  const pd = ep(t, t0 + 2 * B, .6), dx = x0 + surv * k, dX = w - 70, Yd = 200;
+  if (pd > 0) {
+    w0.append("path").attr("d", rib(dx, dx + died * k, Y0 + 12, dX, dX + died * k, Yd)).attr("fill", ST3).attr("clip-path", clip("cd", Y0, Yd + 12, pd));
+    w0.append("text").attr("x", dX + died * k).attr("y", Yd + 54).attr("text-anchor", "end").attr("class", "thin").attr("opacity", pd).style("font-size", "46px").text(died);
+    w0.append("text").attr("x", dX + died * k).attr("y", Yd + 78).attr("text-anchor", "end").attr("class", "lab").attr("opacity", pd).style("font-size", "20px").text("die before age 5");
+  }
+  const gap = 22, tot = surv * k + gap * 4; let cx = (w - tot) / 2 - 40, src = x0;
+  const Q = keys.map((key, i) => { const o = { kids: spec.cohort[key].kids, st: spec.cohort[key].stunted, x: cx, name: names[i] }; o.w = o.kids * k; cx += o.w + gap; return o; });
+  const pq = ep(t, at(12), .8), pp = ep(t, at(13), .9);
+  Q.forEach((q, i) => {
+    if (pq > 0) {
+      w0.append("path").attr("d", rib(src, src + q.kids * k, Y0 + 12, q.x, q.x + q.w, Y1)).attr("fill", ST2).attr("clip-path", clip("cq" + i, Y0, Y1 + 12, pq));
+      const pl = ep(t, at(12) + .4 + i * B * .5, .3);
+      w0.append("rect").attr("x", q.x).attr("y", Y1).attr("width", q.w).attr("height", 10 * pl).attr("fill", INK2);
+      w0.append("text").attr("x", q.x).attr("y", Y1 + 36).attr("class", "thin").attr("opacity", pl).style("font-size", "32px").text(q.kids);
+      w0.append("text").attr("x", q.x).attr("y", Y1 + 58).attr("class", "lab").attr("opacity", pl).style("font-size", "18px").text(q.name);
+    }
+    src += q.kids * k;
+    if (pp > 0) {
+      const sw = q.st * k, sx = q.x - 8;
+      w0.append("path").attr("d", rib(q.x, q.x + sw, Y1 + 66, sx, sx + sw, Y2)).attr("fill", "url(#tO)").attr("clip-path", clip("cs" + i, Y1 + 66, Y2 + 12, pp));
+      w0.append("path").attr("d", rib(q.x + sw, q.x + q.w, Y1 + 66, sx + sw + 12, sx + q.w + 12, Y2)).attr("fill", ST2).attr("opacity", .6).attr("clip-path", clip("cg" + i, Y1 + 66, Y2 + 12, pp));
+      const pn = ep(t, at(13) + B + i * B * .75, .35);
+      w0.append("rect").attr("x", sx).attr("y", Y2).attr("width", sw).attr("height", 12 * pn).attr("fill", O);
+      w0.append("rect").attr("x", sx + sw + 12).attr("y", Y2).attr("width", q.w - sw).attr("height", 12 * pn).attr("fill", ST3);
+      w0.append("text").attr("x", sx).attr("y", Y2 + 56).attr("class", "thin").attr("opacity", pn).style("font-size", "48px").text(Math.round(q.st * pn));
+      w0.append("text").attr("x", sx).attr("y", Y2 + 80).attr("class", "lab").attr("opacity", pn).style("font-size", "17px").text(`of ${q.kids} too short`);
+    }
+  });
+  const pt = ep(t, at(13) + B + 4 * B * .75 + .3, .5), total = Q.reduce((s, q) => s + q.st, 0);
+  if (pt > 0) {
+    w0.append("text").attr("x", 1000).attr("y", Y2 - 30).attr("text-anchor", "end").attr("class", "thin").attr("opacity", pt).style("font-size", "60px").style("fill", O).text(total);
+    w0.append("text").attr("x", 1000).attr("y", Y2 - 4).attr("text-anchor", "end").attr("class", "lab").attr("opacity", pt).style("font-size", "18px").text(`of ${surv} too short for their age`);
+  }
+  const lg = ep(t, at(11) + .3, .5);   // legend + "illustrative" note, visible from the start
+  if (lg > 0) { const L = w0.append("g").attr("transform", "translate(800,36)").attr("opacity", lg);
+    [[O, "too short for their age"], [ST3, "growing normally"]].forEach(([c, l], i) => { L.append("rect").attr("y", i * 30).attr("width", 20).attr("height", 20).attr("fill", c);
+      L.append("text").attr("x", 30).attr("y", 16 + i * 30).attr("class", "lab").style("font-size", "18px").text(l); });
+    L.append("text").attr("y", 78).attr("class", "mono").style("font-size", "14px").text("ILLUSTRATIVE: AT 2025 RATES"); }
+  // camera: open on the top, tilt down, full, push to poorest, pan to richest, back
+  cam(g, t, [[t0, 900, 300, 1.4], [at(12) + B, 900, 520, 1.12], [at(13), 960, 560, 1.0], [at(14.6), 960, 560, 1.0],
+             [at(14.6) + 2 * B, 520, 880, 1.35], [at(15.3), 520, 880, 1.35], [at(15.3) + B, 1330, 880, 1.35], [at(15.75), 1330, 880, 1.35], [at(16), 960, 560, 1.0]]);
+}
+
+/* ---------- 5 Where ---------- */
+function mapScene(g, t) {
+  const spec = C.map, r = rows("map"), by = Object.fromEntries(r.map(d => [d.group, d]));
+  const cls = v => spec.breaks.filter(b => v >= b).length, tilt = .62, kz = 4.2;
+  const proj = d3.geoMercator().fitExtent([[300, 0], [1700, 790 / tilt]], DATA.geo);
+  const P = ([lo, la], z = 0) => { const [x, y] = proj([lo, la]); return [x, y * tilt + 200 - z]; };
+  const kig = P(d3.geoCentroid(DATA.geo.features.find(f => f.properties.name === "Nyarugenge")));
+  const feats = DATA.geo.features.map(f => ({ f, d: by[f.properties.name], c: d3.geoCentroid(f) })).sort((a, b) => P(a.c)[1] - P(b.c)[1]);
+  const t0 = at(16), ring = (cs, z) => "M" + cs.map(p => P(p, z).join(",")).join("L") + "Z";
+  const zOf = (d, c) => { const [cx, cy] = P(c); return d.v * kz * ep(t, t0 + .2 + Math.hypot(cx - kig[0], cy - kig[1]) / 900, .7); };
+  feats.forEach(({ f }) => f.geometry.coordinates.forEach(poly => g.append("path").attr("d", ring(poly[0], 0)).attr("fill", ST2).attr("stroke", SHEET).attr("stroke-width", 1)));
+  feats.forEach(({ f, d, c }) => {
+    const z = zOf(d, c), top = RAMP[cls(d.v)], side = shade(top, -.45);
+    f.geometry.coordinates.forEach(poly => {
+      const pts = poly[0], flat = pts.map(p => P(p));
+      if (z > .5) for (let i = 0; i < pts.length - 1; i++) { const a = flat[i], b = flat[i + 1];
+        if (d3.polygonContains(flat, [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2 + 1.5])) continue;
+        g.append("polygon").attr("points", [a, b, [b[0], b[1] - z], [a[0], a[1] - z]].map(p => p.join(",")).join(" ")).attr("fill", side).attr("stroke", side).attr("stroke-width", .8); }
+      g.append("path").attr("d", ring(pts, z)).attr("fill", top).attr("stroke", shade(top, .6)).attr("stroke-width", 1);
+    });
+  });
+  const lg = g.append("g").attr("transform", "translate(110,90)").attr("opacity", ep(t, at(16.5), .5));
+  lg.append("text").attr("class", "lab").style("font-size", "30px").text("% of children under 5 too short for their age");
+  lg.append("text").attr("y", 38).style("font-size", "26px").text("Taller district = more children affected");
+  spec.break_labels.forEach((l, i) => { lg.append("rect").attr("x", 0).attr("y", 62 + i * 36).attr("width", 26).attr("height", 26).attr("fill", RAMP[i]);
+    lg.append("text").attr("x", 38).attr("y", 84 + i * 36).style("font-size", "24px").text(l); });
+  const pos = name => { const it = feats.find(o => o.f.properties.name === name); return { it, xy: P(it.c, it.d.v * kz) }; };
+  const ny = pos("Nyarugenge"), gi = pos("Gicumbi");
+  callout(g, ep(t, at(17) + .3, .5), [ny.xy[0], ny.xy[1] + 4], [ny.xy[0] + 120, ny.xy[1] + 130], ["Nyarugenge (Kigali)", "8.7%: lowest"], { size: 30 });
+  callout(g, ep(t, at(17) + 1.6, .5), gi.xy, [gi.xy[0] + 140, gi.xy[1] - 120], ["Gicumbi: 38.8%", "4.5 times higher"], { size: 30 });
+  spec.highlight.split(", ").forEach((name, i) => {
+    const p = ep(t, at(18) + i * B * .6, .35); if (p <= 0 || name === "Gicumbi") return;
+    const { it, xy: [x, y] } = pos(name), left = i % 2;
+    g.append("line").attr("x1", x).attr("x2", x).attr("y1", y).attr("y2", y - 46 * p).attr("stroke", INK).attr("stroke-width", 2);
+    g.append("circle").attr("cx", x).attr("cy", y - 64).attr("r", 19 * backOut(p)).attr("fill", O);
+    g.append("text").attr("x", x).attr("y", y - 56).attr("text-anchor", "middle").attr("class", "mono").style("fill", "#fff").style("font-size", "19px").text(i + 1);
+    g.append("text").attr("x", left ? x - 28 : x + 28).attr("text-anchor", left ? "end" : "start").attr("y", y - 55).attr("class", "lab").attr("opacity", p)
+      .style("font-size", "26px").style("paint-order", "stroke").style("stroke", PAGE).style("stroke-width", "6px").text(`${name} ${it.d.value_as_printed}%`);
+  });
+  cam(g, t, [[t0, kig[0], kig[1] - 40, 1.75], [t0 + 1.2, kig[0], kig[1] - 40, 1.55], [at(17), 960, 540, 1.0], [at(18), 960, 540, 1.0], [at(18) + 2 * B, 860, 470, 1.18], [at(19.5), 860, 470, 1.18]]);
+}
+
+/* ---------- 6 Early years ---------- */
+function early(g, t) {
+  const d = rows("age"), base = 800, kz = 14, bw = 82, dep = 30, step = 150, dx = dep * C30, dy = dep * S30, x0 = 190, t0 = at(19.5);
+  const AGE = ["0–5 months", "6–11 months", "1 year", "2 years", "3 years", "4 years"];
+  g.append("text").attr("x", x0).attr("y", 170).attr("class", "lab").style("font-size", "32px").text("% of children too short for their age, by age");
+  [0, 10, 20, 30].forEach(v => { const y = base - v * kz; g.append("line").attr("x1", x0).attr("x2", x0 + 6 * step).attr("y1", y).attr("y2", y).attr("stroke", GRID);
+    g.append("text").attr("x", x0 - 12).attr("y", y + 8).attr("text-anchor", "end").attr("class", "mono").style("font-size", "22px").text(v + "%"); });
+  const top = [];
+  d.forEach((r, i) => {
+    const p = backOut(clamp((t - (t0 + .2 + i * B * .6)) / .55)), z = r.v * kz * Math.max(0, Math.min(p, 1.04)), x = x0 + 30 + i * step, col = r.group === "12–23" ? O : BL;
+    top.push([x + bw / 2, base - r.v * kz - dy]);
+    g.append("rect").attr("x", x).attr("y", base - z).attr("width", bw).attr("height", z).attr("fill", col);
+    g.append("polygon").attr("points", `${x + bw},${base} ${x + bw + dx},${base - dy} ${x + bw + dx},${base - z - dy} ${x + bw},${base - z}`).attr("fill", shade(col, -.8));
+    g.append("polygon").attr("points", `${x},${base - z} ${x + dx},${base - z - dy} ${x + bw + dx},${base - z - dy} ${x + bw},${base - z}`).attr("fill", shade(col, .5));
+    g.append("text").attr("x", x + bw / 2 + dx / 2).attr("y", base - z - dy - 14).attr("text-anchor", "middle").attr("class", "mono ink").attr("opacity", clamp(p)).style("font-size", "28px").style("font-weight", 600).text(r.value_as_printed + "%");
+    g.append("text").attr("x", x + bw / 2).attr("y", base + 38).attr("text-anchor", "middle").attr("class", "lab").style("font-size", "24px").text(AGE[i]);
+  });
+  // "doubles" arrow from 0–5 months to 1 year
+  const ap = ep(t, t0 + 2.2, .7);
+  if (ap > 0) { const [ax, ay] = top[0], [bx, by] = top[2], mx = (ax + bx) / 2, my = Math.min(ay, by) - 120;
+    const path = g.append("path").attr("d", `M${ax},${ay - 50} Q${mx},${my} ${bx - 10},${by - 56}`).attr("fill", "none").attr("stroke", O).attr("stroke-width", 4);
+    const L = path.node().getTotalLength(); path.attr("stroke-dasharray", `${L * ap} ${L}`);
+    if (ap > .9) g.append("polygon").attr("points", `${bx - 10},${by - 48} ${bx - 26},${by - 66} ${bx - 2},${by - 70}`).attr("fill", O);
+    g.append("text").attr("x", mx).attr("y", my - 4).attr("text-anchor", "middle").attr("class", "lab").attr("opacity", ap).style("font-size", "32px").style("fill", O).text("×2 by age 1–2"); }
+  const mad = rows("diet", "diet_mad")[0], fill = mad.v / 10 * ep(t, at(21.2), 1.0), kx = 1270;
+  g.append("text").attr("x", kx).attr("y", 400).attr("class", "lab").attr("opacity", ep(t, at(21), .4)).style("font-size", "28px").text("10 children aged 6–23 months");
+  for (let i = 0; i < 10; i++) {
+    const x = kx + 22 + i * 58, kid = (gg, c) => { gg.append("circle").attr("cx", x).attr("cy", 462).attr("r", 15).attr("fill", c); gg.append("path").attr("d", `M${x - 21},542 q0,-52 21,-57 q21,5 21,57 z`).attr("fill", c); };
+    const kg = g.append("g").attr("opacity", ep(t, at(21) + i * .05, .3)); kid(kg, ST2); const fr = clamp(fill - i);
+    if (fr > 0) { const cid = "k" + i; g.append("clipPath").attr("id", cid).append("rect").attr("x", x - 22).attr("y", 430).attr("width", 44 * fr).attr("height", 120); kid(g.append("g").attr("clip-path", `url(#${cid})`), BL); }
+  }
+  const pm = ep(t, at(21.5), .5);
+  g.append("text").attr("x", kx).attr("y", 670).attr("class", "thin").attr("opacity", pm).style("font-size", "120px").text(mad.value_as_printed + "%");
+  ["eat enough meals AND", "enough different foods"].forEach((l, i) => g.append("text").attr("x", kx + 4).attr("y", 716 + i * 34).attr("class", "lab").attr("opacity", pm).style("font-size", "28px").text(l));
+  cam(g, t, [[t0, 660, 560, 1.32], [at(20.9), 660, 560, 1.32], [at(21.25), 960, 540, 1.0], [at(22.5), 960, 540, 1.0]]);
+}
+
+/* ---------- 7 2029 ---------- */
+function deadline(g, t) {
+  const u5 = rows("timeline", "u5mr").sort((a, b) => a.y - b.y), st = rows("timeline", "stunted").sort((a, b) => a.y - b.y), spec = C.timeline;
+  const ax = 560, x = d3.scaleLinear([1990, 2031], [200, 2700]), up = v => v * 1.32, dn = v => v * 4.1, t0 = at(22.5), tEnd = at(23.6);
+  const camX = lerp(900, 2160, ep(t, t0 + .2, tEnd - t0 - .2));
+  g.append("line").attr("x1", 120).attr("x2", 2800).attr("y1", ax).attr("y2", ax).attr("stroke", INK).attr("stroke-width", 3);
+  const lbl = (xx, y, s) => g.append("text").attr("x", xx).attr("y", y).attr("class", "lab").style("font-size", "30px").text(s);
+  lbl(camX - 820, 200, "▲ Children who died before 5, per 1,000 born"); lbl(camX - 820, 870, "▼ % of children too short for their age");
+  const grow = yr => ep(t, t0 + (x(yr) - 900) / 1260 * (tEnd - t0) * .9, .5);
+  [1992, 2000, 2005, 2010, 2015, 2020, 2025, 2029].forEach(yr => {
+    g.append("circle").attr("cx", x(yr)).attr("cy", ax).attr("r", 12).attr("fill", PAGE).attr("stroke", yr === 2029 ? O : INK).attr("stroke-width", 3);
+    g.append("text").attr("x", x(yr) + 18).attr("y", ax - 18).attr("class", "mono ink").style("font-size", "24px").style("font-weight", 600).text({ 2015: "2014–15", 2020: "2019–20" }[yr] ?? yr); });
+  u5.forEach(r => { const p = grow(r.y), y = ax - 14 - up(r.v) * p;
+    g.append("line").attr("x1", x(r.y)).attr("x2", x(r.y)).attr("y1", ax - 13).attr("y2", y).attr("stroke", BL).attr("stroke-width", 7);
+    g.append("text").attr("x", x(r.y)).attr("y", y - 14).attr("text-anchor", "middle").attr("class", "thin").attr("opacity", p).style("font-size", "50px").text(r.value_as_printed); });
+  st.forEach(r => { const p = grow(r.y), y = ax + 14 + dn(r.v) * p;
+    g.append("line").attr("x1", x(r.y)).attr("x2", x(r.y)).attr("y1", ax + 13).attr("y2", y).attr("stroke", O).attr("stroke-width", 7);
+    g.append("text").attr("x", x(r.y)).attr("y", y + 48).attr("text-anchor", "middle").attr("class", "thin").attr("opacity", p).style("font-size", "50px").text(r.value_as_printed + "%"); });
+  const pp = ep(t, tEnd, .6), pt = ep(t, tEnd + B * .7, .4), pb = ep(t, tEnd + 2 * B, .5), pr2 = spec.projection.value, tg = spec.target.value;
+  const py = ax + 14 + dn(pr2) * pp, ty = ax + 14 + dn(tg), X = x(2029);
+  g.append("line").attr("x1", X).attr("x2", X).attr("y1", ax + 13).attr("y2", py).attr("stroke", O).attr("stroke-width", 7).attr("stroke-dasharray", "8 9");
+  if (pt > 0) {
+    g.append("circle").attr("cx", X).attr("cy", ty).attr("r", 18 * backOut(pt)).attr("fill", PAGE).attr("stroke", O).attr("stroke-width", 6);
+    g.append("text").attr("x", X + 34).attr("y", ty - 8).attr("class", "lab").attr("opacity", pt).style("font-size", "30px").text("Goal: 15% (NST2)");
+    g.append("text").attr("x", X + 34).attr("y", py + 62).attr("class", "thin").attr("opacity", pt).style("font-size", "66px").text(`≈${Math.round(pr2)}%`);
+    g.append("text").attr("x", X + 36).attr("y", py + 98).attr("class", "lab").attr("opacity", pt).style("font-size", "26px").text("at today's pace (estimate)");
+  }
+  if (pb > 0) { g.append("path").attr("d", `M${X - 26},${ty} h-14 V${py} h14`).attr("fill", "none").attr("stroke", INK).attr("stroke-width", 3).attr("opacity", pb);
+    g.append("text").attr("x", X + 36).attr("y", py + 138).attr("class", "lab").attr("opacity", pb).style("font-size", "28px").style("fill", O).text(`≈${Math.round(pr2 - tg)} points short of the goal`); }
+  cam(g, t, [[t0, camX, 560, 1.0]]);
+}
+
+/* ---------- 8 Summary (things pile up, as in the reference) ---------- */
+function summary(g, t) {
+  const t0 = at(25), u5 = rows("rings").sort((a, b) => a.y - b.y), age = rows("age");
+  const cards = [["36", "of 1,000 children die", "before 5 (196 in 2000)"], ["−84%", "mothers dying in", "pregnancy or after birth"],
+    ["98%", "of births in a", "health facility"], ["258", "of 964 survivors", "too short for age"],
+    ["4.5×", "Gicumbi (38.8%) vs", "Nyarugenge (8.7%)"], ["×2", `stunting: ${age[0].value_as_printed}% at 0–5`, `months → ${age[2].value_as_printed}% at 1`],
+    ["≈23%", "in 2029 at today's", "pace · goal is 15%"]];
+  cards.forEach(([n, a, b], i) => {
+    const p = ep(t, t0 + .1 + i * B * .55, .45); if (p <= 0) return;
+    const c = g.append("g").attr("transform", `translate(${140 + i * 248},${lerp(250, 170, p)})`).attr("opacity", p);
+    c.append("rect").attr("width", 228).attr("height", 300).attr("fill", SHEET);
+    c.append("rect").attr("width", 228).attr("height", 8).attr("fill", i >= 3 ? O : BL);
+    c.append("circle").attr("cx", 32).attr("cy", 48).attr("r", 18).attr("fill", i >= 3 ? O : BL);
+    c.append("text").attr("x", 32).attr("y", 56).attr("text-anchor", "middle").attr("class", "mono").style("fill", "#fff").style("font-size", "20px").text(i + 1);
+    c.append("text").attr("x", 18).attr("y", 170).attr("class", "thin").style("font-size", n.length > 4 ? "70px" : "84px").text(n);
+    c.append("text").attr("x", 18).attr("y", 220).attr("class", "lab").style("font-size", "19px").text(a);
+    c.append("text").attr("x", 18).attr("y", 248).style("font-size", "19px").text(b);
+  });
+  const p1 = ep(t, t0 + 2.4, .5), p2 = ep(t, t0 + 2.8, .5), p3 = ep(t, t0 + 3.3, .5);
+  g.append("text").attr("x", 140).attr("y", 720).attr("class", "cond").attr("opacity", p1).style("font-size", "104px").text("From 196 to 36.");
+  g.append("text").attr("x", 140).attr("y", 826).attr("class", "cond").attr("opacity", p2).style("font-size", "104px").style("fill", O).text("Now help them grow.");
+  g.append("rect").attr("x", 144).attr("y", 850).attr("width", 1100 * p2).attr("height", 7).attr("fill", O);
+  g.append("text").attr("x", 144).attr("y", 902).attr("class", "mono ink").attr("opacity", p3).style("font-size", "24px").text("TEAM WINNERS · MOSES MUGISHA · 2026 NISR INFOGRAPHIC COMPETITION");
+  g.append("text").attr("x", 144).attr("y", 942).attr("opacity", p3).style("font-size", "21px").text("Data: NISR, Rwanda DHS 2025 (RDHS7). Death rates cover the 5 years before each survey. Cohort is illustrative; 2029 is the authors' estimate; goal from NST2 2024–2029.");
+}
+
+const SCENES = [[rings, 0, at(6)], [care, at(6), at(10)], [turn, at(10), at(11)], [cohort, at(11), at(16)], [mapScene, at(16), at(19.5)],
+  [early, at(19.5), at(22.5)], [deadline, at(22.5), at(25)], [summary, at(25), DUR]];
+const STEPS = ["Survival", "Care", "The turn", "1,000 babies", "Where", "Early years", "2029"];
+const CAPS = [[.5, 4.5, "In 2000, <b>196</b> of every 1,000 children died before turning 5."],
+  [at(2) + .3, at(4.5), "By 2025: <b>36</b>. Far more children now live past 5."],
+  [at(4.5) + .2, at(6) - .15, "Mothers too: deaths in pregnancy and after childbirth fell <b>84%</b>."],
+  [at(7) + .2, at(10) - .15, "Care reached almost every mother: <b>98%</b> now give birth in a health facility."],
+  [at(11) + .25, at(13) + B, "Follow <b>1,000 babies</b> born today."],
+  [at(13) + B, at(14.6) + B, "<b>258</b> of the 964 who survive are too short for their age."],
+  [at(14.6) + B, at(16) - .15, "Poorest families: <b>87 of 218</b>. Richest: <b>16 of 174</b>."],
+  [at(17) + .3, at(19.5) - .15, "Kigali's Nyarugenge: <b>8.7%</b>. Gicumbi: <b>38.8%</b>, 4.5 times higher."],
+  [at(19.5) + .25, at(21.2), "The harm starts early: stunting <b>doubles</b> between 6 months and 2 years."],
+  [at(21.2) + .05, at(22.5) - .12, "Only <b>27%</b> of toddlers eat enough, varied meals."],
+  [at(22.5) + .6, at(25) - .12, "At today's pace: about <b>23%</b> in 2029. The goal is <b>15%</b>."]];
+
+/* HUD: story tracker (7 steps) + the orange thread between scenes. */
+function hud(t) {
+  const h = d3.select("#hud").html(""), xs = d3.range(7).map(i => 520 + i * 200), y = 44;
+  h.append("rect").attr("x", 64).attr("width", 1856).attr("height", 104).attr("fill", PAGE).attr("opacity", .94);
+  const idx = SCENES.findIndex(([, a, b]) => t >= a && t < b), done = Math.min(idx, 7);
+  const travel = SCENES.map(([, a]) => a).slice(1).reduce((p, b, i) => t > b - .4 && t < b + .3 ? [i, clamp((t - (b - .4)) / .7)] : p, null);
+  h.append("line").attr("x1", xs[0]).attr("x2", xs[6]).attr("y1", y).attr("y2", y).attr("stroke", ST3).attr("stroke-width", 3);
+  const fillTo = travel ? lerp(xs[travel[0]], xs[Math.min(travel[0] + 1, 6)], io(travel[1])) : xs[Math.min(done, 6)];
+  h.append("line").attr("x1", xs[0]).attr("x2", fillTo).attr("y1", y).attr("y2", y).attr("stroke", O).attr("stroke-width", 5);
+  xs.forEach((x, i) => {
+    const on = i <= done && idx >= 0, cur = i === done && idx < 7;
+    h.append("circle").attr("cx", x).attr("cy", y).attr("r", cur ? 17 : 13).attr("fill", on ? O : PAGE).attr("stroke", on ? O : ST3).attr("stroke-width", 3);
+    h.append("text").attr("x", x).attr("y", y + 6).attr("text-anchor", "middle").attr("class", "mono").style("font-size", cur ? "17px" : "14px").style("font-weight", 600).style("fill", on ? "#fff" : INK2).text(i + 1);
+    if (cur || idx === 7) h.append("text").attr("x", x).attr("y", y + 46).attr("text-anchor", "middle").attr("class", "lab").style("font-size", cur ? "24px" : "18px").style("fill", INK).text(STEPS[i]);
+  });
+  if (travel) {   // thread: an orange line sweeps forward across the frame, leading into the next scene
+    const q = io(travel[1]), x1 = lerp(64, 1920, q), x0 = lerp(64, 1920, clamp(q * 1.6 - .6));
+    h.append("line").attr("x1", x0).attr("x2", x1).attr("y1", 560).attr("y2", 560).attr("stroke", O).attr("stroke-width", 8).attr("stroke-linecap", "round");
+    h.append("circle").attr("cx", x1).attr("cy", 560).attr("r", 14).attr("fill", O);
+  }
+}
+
+window.seek = t => {
+  const sv = d3.select("#sv").html("");
+  for (const [fn, a, b] of SCENES) {
+    if (t < a - .001 || t >= b) continue;
+    const pin = a === 0 ? 1 : clamp((t - a - .1) / .35), pout = b >= DUR ? 1 : clamp((b - t) / .3);
+    const dx = (1 - io(pin)) * 320 - (1 - io(pout)) * 320;          // enter from the right, leave to the left: always forward
+    const g = sv.append("g").attr("opacity", Math.min(pin, pout)).attr("transform", `translate(${dx},0)`), inner = g.append("g");
+    fn(inner, t);
+  }
+  hud(t);
+  const c = CAPS.find(([a, b]) => t >= a && t < b), el = document.getElementById("cap");
+  el.innerHTML = c ? c[2] : ""; el.style.display = c ? "block" : "none"; el.style.opacity = c ? Math.min(clamp((t - c[0]) / .2), clamp((c[1] - t) / .15)) : 0;
+};
+window.DUR = DUR;
+window.ready = Promise.all(['600 46px "Source Sans 3"', '700 46px "Source Sans 3"', '400 24px "Source Sans 3"', "200 60px Archivo", "800 60px Archivo", '500 20px "IBM Plex Mono"', '600 20px "IBM Plex Mono"', "700 20px Archivo"]
+  .map(f => document.fonts.load(f))).then(() => document.fonts.ready).then(() => { seek(0); return true; });
+</script></body></html>

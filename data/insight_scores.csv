@@ -1,0 +1,57 @@
+id,section,big,reliable,easy,actionable,total,statement,selected
+u5mr_drop_2000,1 Hook,3,3,3,2,11,Under-5 mortality fell 82% from 196 (2000) to 36 (2025),yes
+u5mr_per1000,1 Hook,3,3,3,2,11,"Of every 1,000 babies born, 160 more now live to their 5th birthday than in 2000",yes
+u5mr_1992_2000,1 Hook,2,3,2,1,8,Under-5 mortality rose from 151 (1992 survey) to 196 (2000 survey) before falling,
+u5mr_aarr_2000,1 Hook,2,3,1,1,7,"Under-5 mortality fell on average 6.6% per year, 2000–2025",
+u5mr_period_test,1 Hook,2,3,1,1,7,"Within this survey, under-5 mortality fell from 46 (2010–15) to 36 (2021–25)",
+prmr_drop_2000,2 Progress,3,3,2,2,10,Pregnancy-related mortality ratio fell 84% from 1071 (2000) to 172 (2025),yes
+nmr_drop_2000,2 Progress,2,3,2,2,9,Neonatal mortality fell 61% from 44 (2000) to 17 (2025),
+imr_drop_2000,2 Progress,2,3,2,1,8,Infant mortality fell 75% from 107 (2000) to 27 (2025),
+tfr_drop_2000,2 Progress,2,3,2,1,8,Total fertility rate fell 36% from 5.8 (2000) to 3.7 (2025),
+prmr_aarr_2000,2 Progress,2,3,1,1,7,"Pregnancy-related mortality ratio fell on average 7.1% per year, 2000–2025",
+prmr_change_test,2 Progress,2,3,1,1,7,Pregnancy-related mortality fall since 2000 is statistically significant,
+imr_aarr_2000,2 Progress,1,3,1,1,6,"Infant mortality fell on average 5.4% per year, 2000–2025",
+nmr_aarr_2000,2 Progress,1,3,1,1,6,"Neonatal mortality fell on average 3.7% per year, 2000–2025",
+tfr_aarr_2000,2 Progress,1,3,1,1,6,"Total fertility rate fell on average 1.8% per year, 2000–2025",
+mmr_change_test,2 Progress,1,1,1,1,4,Maternal mortality ratio 203 → 149: the change is NOT statistically significant,
+cohort_survivors,3 Cohort,3,3,3,2,11,"Of 1,000 babies, 36 die before age 5 and 964 survive",yes
+cohort_stunted,3 Cohort,3,2,3,3,11,"Of the 964 survivors, about 258 are stunted",yes
+cohort_lowest,3 Cohort,3,2,3,3,11,"Lowest 20%: 218 children, 87 stunted",yes
+cohort_highest,3 Cohort,3,2,3,3,11,"Highest 20%: 174 children, 16 stunted",yes
+cohort_second,3 Cohort,2,2,2,2,8,"Second 20%: 197 children, 63 stunted",
+cohort_middle,3 Cohort,2,2,2,2,8,"Middle 20%: 193 children, 56 stunted",
+cohort_fourth,3 Cohort,2,2,2,2,8,"Fourth 20%: 182 children, 36 stunted",
+facility_birth_rise,3 What changed,3,3,3,2,11,Delivered in a health facility: 25% (1992) → 98% (2025),yes
+anc_4plus_rise,3 What changed,3,3,3,2,11,4+ antenatal care visits: 12% (1992) → 78% (2025),yes
+vacc_basic_rise,3 What changed,2,3,3,2,10,Fully vaccinated (basic antigens): 76% (2000) → 94% (2025),yes
+mcpr_rise,3 What changed,3,3,2,2,10,Modern contraceptive use: 12.9% (1992) → 64.2% (2025),yes
+stunted_children_in_4,4 Problem,3,3,3,3,12,About 1 in 3.7 children under 5 is stunted (roughly 1 in 4),yes
+district_range,4 Problem,3,3,3,3,12,"District stunting ranges from 8.7% (Nyarugenge) to 38.8% (Gicumbi), 4.5× apart",yes
+top5_districts,4 Problem,3,3,3,3,12,"Highest stunting: Gicumbi (Northern) 38.8%, Burera (Northern) 37.6%, Ngororero (Western) 35.8%, Rutsiro (Western) 33.8%, Karongi (Western) 33.5%",yes
+stunted_drop_2005,4 Problem,3,3,3,2,11,Stunted fell 47% from 51 (2005) to 27 (2025),yes
+stunted_projection_2029,4 Problem,3,2,3,3,11,"At the 2020–2025 pace (3.9%/yr), stunting would be about 23% in 2029, not the 15% target",yes
+stunted_needed_rate,4 Problem,3,3,2,3,11,"Reaching 15% by 2029 needs a 14% fall every year, about 3.5× the recent pace",yes
+districts_above_national,4 Problem,3,3,2,3,11,"4 of 30 districts are significantly above the national 26.8%: Gicumbi 38.8, Burera 37.6, Ngororero 35.8, Rubavu 33.1",
+stunted_drop_2019-20,4 Problem,2,3,2,2,9,Stunted fell 18% from 33 (2019-20) to 27 (2025),
+districts_below_national,4 Problem,2,3,2,2,9,"5 districts are significantly below national: Nyarugenge 8.7, Kicukiro 14.3, Gasabo 16.0, Rwamagana 19.2, Bugesera 20.8",
+stunted_aarr_2019-20,4 Problem,2,3,1,2,8,"Stunted fell on average 3.9% per year, 2019-20–2025",
+stunted_aarr_2005,4 Problem,2,3,1,1,7,"Stunted fell on average 3.1% per year, 2005–2025",
+stunted_ols,4 Problem,2,3,1,1,7,"Since 2005 stunting has fallen about 1.2 percentage points per year (straight-line fit, r = -0.998)",
+stunted_gap_Mother’s_No edu,5 Gaps,3,3,3,3,12,"Stunting: No education 37.8% vs More than secondary 5.8% — 6.5× higher, 32.0 points",yes
+stunted_gap_Wealth q_Lowest,5 Gaps,3,3,3,3,12,"Stunting: Lowest 39.8% vs Highest 9.2% — 4.3× higher, 30.6 points",yes
+stunted_gap_Province_Northe,5 Gaps,3,3,3,3,12,"Stunting: Northern Province 32.7% vs City of Kigali 14.2% — 2.3× higher, 18.5 points",yes
+stunted_gap_Province_Wester,5 Gaps,3,3,3,3,12,"Stunting: Western Province 32.6% vs City of Kigali 14.2% — 2.3× higher, 18.4 points",
+stunted_gap_Residenc_Rural,5 Gaps,2,3,3,2,10,"Stunting: Rural 30.1% vs Urban 18.6% — 1.6× higher, 11.5 points",
+u5mr_gap_Wealth q,5 Gaps,2,3,3,2,10,"Under-5 deaths: Lowest 48 vs Highest 22 per 1,000 (2.2×)",
+u5mr_gap_Province,5 Gaps,2,3,3,2,10,"Under-5 deaths: Eastern Province 47 vs Northern Province 30 per 1,000 (1.6×)",
+stunted_gap_Size at _Very s,5 Gaps,2,3,2,2,9,"Stunting: Very small 49.0% vs Average or larger 23.7% — 2.1× higher, 25.3 points",
+u5mr_gap_Mother’s,5 Gaps,3,1,3,2,9,"Under-5 deaths: No education 44 vs More than secondary (11) per 1,000 (4.0×)",
+stunted_gap_Sex_Male,5 Gaps,1,3,2,1,7,"Stunting: Male 29.3% vs Female 24.1% — 1.2× higher, 5.2 points",
+diet_mad_gap,"6 First 1,000 days",3,3,3,3,12,Only about 3 in 10 children aged 6–23 months get a minimum acceptable diet,yes
+stunting_by_age,"6 First 1,000 days",3,3,3,3,12,Stunting jumps from 16.7% (<6 mo) → 19.8% (6–11 mo) → 33.2% (12–23 mo) → 30.6% (24–35 mo): damage builds in the first 2 years,yes
+diet_mad_2025,"6 First 1,000 days",3,3,2,3,11,Minimum acceptable diet: 26.9% (% of youngest children 6–23 months living with mother),
+bf_early_2025,"6 First 1,000 days",2,3,3,2,10,Breastfed within 1 hour of birth: 79.2% (% of children born in last 2 years),
+bf_exclusive_2025,"6 First 1,000 days",2,3,3,2,10,Exclusive breastfeeding: 81.8% (% of youngest children 0–5 months living with mother),
+diet_mdd_2025,"6 First 1,000 days",2,3,2,3,10,Minimum dietary diversity: 43.5% (% of youngest children 6–23 months living with mother),
+diet_mmf_2025,"6 First 1,000 days",2,3,2,3,10,Minimum meal frequency: 48.4% (% of youngest children 6–23 months living with mother),
+corr_district_bf_stunting,"6 First 1,000 days",1,3,1,1,6,"Across districts, exclusive breastfeeding and stunting show a weak negative correlation (r = -0.28)",

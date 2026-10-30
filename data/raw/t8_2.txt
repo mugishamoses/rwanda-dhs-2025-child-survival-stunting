@@ -1,0 +1,13 @@
+
+PDF pages: 179
+
+HEADER
+           characteristics
+           Neonatal, postneonatal, infant, child, and under-5 mortality rates for the 5-year period preceding the survey,
+           according to background characteristics, Rwanda DHS 2025
+                                   Neonatal          Postneonatal             Infant              Child                 Under-5
+           Background              mortality           mortality             mortality           mortality              mortality
+           characteristic            (NN)               (PNN)1                 (1q0)              (4q1)                  (5q0)
+
+FOOTNOTES
+

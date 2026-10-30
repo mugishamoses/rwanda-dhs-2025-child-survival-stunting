@@ -1,0 +1,16 @@
+indicator,series,unit,1992,2000,2005,2010,2014-15,2019-20,2025,source,pdf_page,text_check
+u5mr,Under-5 mortality,per 1000 live births (5y before survey),151,196,152,76,50,45,36,Final Report Figure 8.1,176,"text: 196 (2000) -> 36 (2025)"
+imr,Infant mortality,per 1000 live births (5y before survey),85,107,86,50,32,33,27,Final Report Figure 8.1,176,"text: 107 -> 27"
+nmr,Neonatal mortality,per 1000 live births (5y before survey),39,44,37,27,20,19,17,Final Report Figure 8.1,176,"text: 44 -> 17"
+anc_skilled,ANC from skilled provider,% women with birth in 2y,94,93,95,98,99,98,95,Final Report Figure 9.1,184,"text: 94% (1992) -> 95% (2025)"
+anc_4plus,4+ ANC visits,% women with birth in 2y,12,10,13,36,43,47,78,Final Report Figure 9.1,184,"text: 12% -> 78%"
+anc_trim1,First ANC in first trimester,% women with birth in 2y,3,4,8,40,54,57,67,Final Report Figure 9.1,184,"text: 3% -> 67%"
+facility_birth,Delivered in health facility,% live births in 2y,25,26,30,80,92,94,98,Final Report Figure 9.2,187,"text: 25% -> 98%"
+home_birth,Delivered at home,% live births in 2y,73,74,68,18,7,5,2,Final Report Figure 9.2,187,"text: 73% -> 2%"
+csection,Caesarean section,% live births in 2y,2,3,3,9,14,17,24,Final Report Figure 9.3,188,"text: 2% -> 24%"
+skilled_birth,Skilled attendance at delivery,% live births in 2y,26,25,30,81,92,95,98,Final Report Figure 9.5,188,"text: 26% -> 98%"
+vacc_basic,All basic vaccinations,% children 12-23 months,,76,75,90,93,96,94,Final Report Figure 10.2,222,"text: 76% (2000) -> 96% (2019-20) -> 94% (2025)"
+vacc_none,No vaccinations,% children 12-23 months,,2,3,1,1,<1,1,Final Report Figure 10.2,222,
+stunted,Stunted (height-for-age < -2SD),% children under 5,,48,51,44,38,33,27,DHS7 Booklet p.22 (English),,"Key Indicators text: 51 (2005) -> 33 (2019-20) -> 27 (2025); Table 11.1 2025 = 26.8"
+wasted,Wasted (weight-for-height < -2SD),% children under 5,,8,5,3,2,1,1,DHS7 Booklet p.22 (English),,"Final Report text: 8% (2000) -> 1% (2025); Table 11.1 2025 = 0.9"
+overweight,Overweight (weight-for-height > +2SD),% children under 5,,7,6,7,8,6,5,DHS7 Booklet p.22 (English),,"Final Report text: fluctuated 5-8%; Table 11.1 2025 = 5.1"

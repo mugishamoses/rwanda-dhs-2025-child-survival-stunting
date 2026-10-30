@@ -1,0 +1,5 @@
+indicator,group,value,unit,source,pdf_page,note
+u5mr_10y,No education,44,per 1000 (10y before survey),Final Report Figure 8.2,176,
+u5mr_10y,Primary,41,per 1000 (10y before survey),Final Report Figure 8.2,176,
+u5mr_10y,Secondary,29,per 1000 (10y before survey),Final Report Figure 8.2,176,
+u5mr_10y,More than secondary,(11),per 1000 (10y before survey),Final Report Figure 8.2,176,parentheses = 25-49 unweighted cases

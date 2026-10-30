@@ -1,0 +1,20 @@
+Table 10.4 Vaccinations by background characteristics
+PDF pages: 231
+
+HEADER
+Percentage of children aged 12–23 months and children aged 24–35 months who received specific vaccines at any time before the survey (according to a vaccination card or the mother’s report), percentage fully vaccinated (basic antigens), percentage
+fully vaccinated according to the national schedule, and percentage who received no vaccinations, according to background characteristics, Rwanda DHS 2025
+                                                                                                                                                                                                                                         Children aged
+                                                                                                                Children aged 12–23 months                                                                                               24–35 months
+                                                                                                                                                                                                     Fully                            Fully
+                                                                                                                                                                                                    vacci-                            vacci-
+                                                                                                                                                                                       Fully        nated                             nated
+                                                                                                                                                                                      vacci-       accord-                           accord-
+                                                                                                                                                                              Measles nated         ing to                   Measles ing to   Num-
+                                                                                                                                                                                and   (basic       national   No    Number     and   national ber of
+                                                  DPT-HepB-Hib                             OPV1                                    Pneumococcal               Rotavirus
+Background                                                                                                                                                                    rubella  anti-        sched- vacci-      of    rubella sched- child-
+characteristic                  BCG         1          2          3        0         1             2      3        IPV         1         2         3          1         2        1    gens)2         ule3   nations children    2      ule4    ren
+
+FOOTNOTES
+Note: Children are considered to have received the vaccine if it was either written on the child’s vaccination card or reported by the mother. For children whose vaccination information is based on the mother’s report, date of vaccination is not collected.

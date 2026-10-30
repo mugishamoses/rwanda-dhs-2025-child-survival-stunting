@@ -1,0 +1,15 @@
+Table B.5 Sampling errors: City of Kigali sample, Rwanda DHS 2025
+PDF pages: 453, 454
+
+HEADER
+                                                                                    Number of cases                         Confidence limits
+                                                                          Standard   Un-               Design    Relative
+                                                                 Value      error  weighted Weighted    effect     error
+Variable                                                          (R)       (SE)      (N)      (WN)    (DEFT)     (SE/R)    R-2SE      R+2SE
+                                                                                                Number of cases                        Confidence limits
+                                                                                   Standard   Un-                 Design    Relative
+                                                                          Value      error  weighted Weighted      effect     error
+Variable                                                                   (R)       (SE)      (N)     (WN)       (DEFT)     (SE/R)    R-2SE     R+2SE
+
+FOOTNOTES
+

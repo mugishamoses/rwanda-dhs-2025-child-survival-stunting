@@ -1,0 +1,6 @@
+table,pdf_page,group,label,c1,c2,c3,c4,c5,ncols_flag
+8.2,179,Child’s sex,Male,20,10,30,11,40,
+8.2,179,Child’s sex,Female,14,11,25,8,32,
+8.2,179,Residence,Urban,17,8,25,7,32,
+8.2,179,Residence,Rural,17,11,28,10,38,
+8.2,179,Residence,Total,17,10,27,9,36,
